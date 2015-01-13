@@ -1,0 +1,164 @@
+\documentclass[nocap, UTF8]{ctexrep}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{epigraph}
+\usepackage{titlesec}
+\usepackage[colorlinks, linkcolor=black, unicode=true]{hyperref}
+\usepackage{titletoc}
+\usepackage{times}
+
+
+\CTEXoptions[contentsname={目录}, today=small]
+\CTEXsetup[name={,}, aftername={\quad}]{chapter}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% title page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand\epigraphflush{flushleft}
+\renewcommand\epigraphsize{\normalsize}
+\setlength\epigraphwidth{0.7\textwidth}
+
+\definecolor{titlepagecolor}{cmyk}{0.52,.10,0,0}
+
+\DeclareFixedFont{\titlefont}{T1}{ppl}{b}{it}{0.5in}
+
+\makeatletter
+\def\printauthor{%
+    {\large \@author}}
+\makeatother
+\author{
+	邱程 (Qiu, Cheng)\\
+    qiuch@foxmail.com\\
+    \vspace{5pt}
+    \today
+}
+
+% This is the command I wish to optimize
+\newcommand\titlepagedecoration[1]{%
+\begin{tikzpicture}[remember picture,overlay,shorten >= -10pt]
+\coordinate (tp1) at ([yshift=2cm]current page.west);
+\coordinate (tp2) at ([yshift=2cm,xshift=9cm]current page.west);
+\coordinate (tp3) at ([yshift=-15pt,xshift=7cm]current page.north);
+\coordinate (tp4) at ([yshift=-15pt]current page.north west);
+
+\filldraw[draw=titlepagecolor,fill=titlepagecolor] (tp1)--(tp2)--(tp3)--(tp4)--cycle;
+\filldraw[draw=titlepagecolor!30!white,fill=titlepagecolor!30!white,opacity=0.2] ([xshift=-5cm]tp1)--([xshift=-5cm]tp2)--([xshift=-5cm]tp3)--([xshift=-5cm]tp4)--cycle;
+\node[right] at ([xshift=1cm,yshift=-5cm]current page.north west) {\parbox{\textwidth}{\color{white}#1}};
+\end{tikzpicture}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% fancy toc
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{doc}{RGB}{0,60,110}
+\definecolor{myblueii}{cmyk}{0.52,.10,0,0}
+\hypersetup{%
+    pdfborder = {0 0 0},
+    colorlinks,
+    citecolor=red,
+    filecolor=green,
+    linkcolor=myblueii,
+    urlcolor=cyan!50!black!90
+}
+
+\contentsmargin{0cm}
+\titlecontents{chapter}[0pc]
+{\addvspace{30pt}%
+\begin{tikzpicture}[remember picture, overlay]%
+\draw[fill=myblueii,draw=myblueii, rounded corners] (-4,-.1) rectangle (-0.15,.5);%
+\pgftext[left,x=-2.7cm,y=0.2cm]{\color{white}\Large \chaptertitlename\ \thecontentslabel};%
+\end{tikzpicture}\color{myblueii}\large\bfseries}%
+{}
+{}
+{\hspace*{6pt}\titlerule\hspace*{6pt}\large\bfseries \thecontentspage
+\begin{tikzpicture}[remember picture, overlay]
+\draw[fill=doc!25,draw=myblueii, rounded corners=0pt] (2pt,0) rectangle (6,0.1pt);
+\end{tikzpicture}}%
+\titlecontents{section}[2.4pc]
+{\addvspace{1pt}}
+{\contentslabel[\thecontentslabel]{2.4pc}}
+{}
+{\hfill\small \thecontentspage}
+[]
+\titlecontents{subsection}[4.8pc]
+{\addvspace{1.0pt}}
+{\contentslabel[\thecontentslabel]{2.4pc}}
+{}
+{\hfill\small\thecontentspage}
+[]
+ 
+\makeatletter
+\renewcommand{\tableofcontents}{%
+\chapter*{%
+\vspace*{-20\p@}%
+\begin{tikzpicture}[remember picture, overlay]%
+\pgftext[right,x=15cm,y=0.2cm]{\color{myblueii}\Huge \contentsname};%
+\draw[fill=myblueii,draw=myblueii, rounded corners=15pt] (13,-.75) rectangle (20,1);%
+\clip (13,-.75) rectangle (20,1);
+\pgftext[right,x=15cm,y=0.2cm]{\color{white}\Huge \contentsname};%
+\end{tikzpicture}}%
+\@starttoc{toc}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% begin of document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% titlepage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{titlepage}
+    \titlepagedecoration{%
+        \zihao{-0} 文档名称\par
+        \epigraph{\zihao{4}文档简介
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        %%%%%% CHANGES HERE %%%%%%%%%%%%%%%%
+        \tikz[remember picture,overlay]{%
+            \node (X) at (0,-1ex) {};
+            \filldraw[opacity=0.5,draw=titlepagecolor,fill=titlepagecolor] (tp1 |- X) -- (X -| tp2) -- (tp2) -- (tp1) -- cycle;
+        }
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        }%
+        {\textit{\zihao{4}浙江大学软件学院}\\ \textsc{\zihao{4}金融数据分析技术}}
+
+    }
+    \null\vfill
+    \vspace*{1cm}
+    \noindent
+    \begin{minipage}{0.35\linewidth}
+        \begin{flushleft}
+            \printauthor
+        \end{flushleft}
+    \end{minipage}
+\end{titlepage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% toc
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{
+  \hypersetup{hidelinks}
+  \tableofcontents%
+  \pagenumbering{Roman}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% begin of chapter1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{我的}
+<<setup, echo = FALSE>>=
+opts_knit$set(width = 50, digits = 8)
+opts_chunk$set(fig.align = 'center', tidy = FALSE)
+@
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
+第一章的内容从这里开始……
+\section{你猜}
+
+\subsection{}
+
+\chapter{你的}
+\end{document}
+ 
